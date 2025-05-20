@@ -6,7 +6,7 @@ import numpy as np
 df_resultados = pd.read_csv("resultados_abs_err.csv")
 
 # Seleccionar el ancho de banda a analizar
-banda_seleccionada = "Bandwidth1"  # Cambia esto según el caso
+banda_seleccionada = "Bandwidth2"  # Cambia esto según el caso
 df_filtrado = df_resultados[df_resultados["Banda"] == banda_seleccionada]
 
 # Calcular el máximo del valor absoluto del error para cada configuración

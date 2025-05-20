@@ -1,5 +1,6 @@
 import numpy as np
 import scipy
+from datetime import datetime
 
 def frecuencias_dominantes(frecuencias, magnitud, rango=(0.1, 0.4), n=1):
 
@@ -45,6 +46,28 @@ def slow_time_max_var(R):
     return indice_max_var, varianzas
 # Función para cargar mediciones desde un archivo .mat
 def cargar_medicion(ruta, key):
+
     data = scipy.io.loadmat(ruta)
-    #print(data.keys())
+
     return data[key]  # Ajusta según la estructura del archivo
+
+
+def parse_oximeter_txt(file_path):
+    with open(file_path, 'r') as f:
+        lines = f.readlines()
+
+    timestamps = []
+    heart_rates = []
+
+    for i in range(0, len(lines) - 1, 2):
+        time_str = lines[i].strip()
+        values = lines[i + 1].strip().split()
+        pairs = [(int(values[j]), int(values[j+1])) for j in range(0, len(values), 2)]
+
+        # Filter for value with flag == 1
+        valid = [val for val, flag in pairs if flag == 1]
+        if valid:
+            timestamps.append(datetime.strptime(time_str, "%Y-%m-%d %H:%M:%S.%f"))
+            heart_rates.append(valid[0])  # Keep the first valid one
+
+    return timestamps, heart_rates

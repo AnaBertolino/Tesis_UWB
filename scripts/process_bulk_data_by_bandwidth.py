@@ -44,6 +44,7 @@ for archivo_raw in archivos_raw:
     # Cargar datos
     medicion = cargar_medicion(ruta_raw, "bScan")
     referencia = cargar_medicion(ruta_ref, "Ref")[0, :]
+    
 
     # Procesamiento de la señal
     medicion_filtrada = remove_clutter_MA(medicion, k=30)
